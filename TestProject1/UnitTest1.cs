@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using PizzaStore;
 
-namespace TestProject_Pizza
+namespace TestProject1
 {
     public class Tests
     {
@@ -16,5 +16,15 @@ namespace TestProject_Pizza
             double actualResult = UserValidator.IsAmountValid(firstArgument);
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        [TestCase("I4", "aaa")]
+        public void IsNameValidTest(double firstArgument, double expectedResult)
+        {
+            double actualResult = UserValidator.IsNameValid(firstArgument);
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+
     }
+} 
 }
