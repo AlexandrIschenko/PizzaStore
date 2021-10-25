@@ -10,7 +10,7 @@ namespace PizzaStore.Services
 
         public UserService(UserValidator userValidator)
         {
-            _userValidator = userValidator;
+            _userValidator = userValidator;                          
         }
 
         public User CreateUser(string name, double amount)

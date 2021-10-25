@@ -26,7 +26,7 @@ namespace PizzaStore
             }
         };
 
-        public static List<string> GetIngredientsByPizzaType(PizzaType pizzaType)
+        public static List<string> GetIngredientsByPizzaType(PizzaType pizzaType) 
         {
             var ingredients = new List<string>();
 
