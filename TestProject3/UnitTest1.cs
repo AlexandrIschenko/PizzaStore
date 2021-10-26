@@ -48,26 +48,35 @@ namespace TestProject3
 
         [TestCase("Neapolitan", "Neapolitan")]
         [TestCase("California", "California")]
-        public void PizzaTypeTest(string Namepizza, string pizzaTypeExpectedResult)
+        public void PizzaTypeTest(string namePizza, string pizzaTypeExpectedResult)
         {
-            var pizzaResult = new PizzaService( new PizzaValidator()).ChoosePizza(Namepizza);
+            var pizzaResult = new PizzaService( new PizzaValidator()).ChoosePizza(namePizza);
             Assert.AreEqual(pizzaTypeExpectedResult, pizzaResult.Name);
         }
 
         [TestCase("Neapolitan", " invalid")]
         [TestCase("California", " invalid")]
         [TestCase("Detroit", " invalid")]
-        public void PizzaErrorsTest(string Namepizza, string pizzaTypeExpectedResult)
+        public void PizzaErrorsTest(string namePizza, string pizzaTypeExpectedResult)
         {
             try
             {
-                var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(Namepizza);
+                var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(namePizza);
             }
             catch (Exception expection)
             {
                 Assert.AreEqual(pizzaTypeExpectedResult, expection.Message.ToString());
             }
         }
+
+        //[TestCase("1","Tina", 1, 8)]
+        //public void PizzaPayTest(string pizzaNumber, string userName, double userAmount, double expectedAmountResult)
+        //{
+        //    PizzaService pizzaService = new PizzaService(new PizzaValidator());
+        //    pizzaService.ChoosePizza(pizzaNumber);
+        //    User user = new UserService(new UserValidator()).CreateUser(userName, userAmount);
+        //    Assert.AreEqual(expectedAmountResult, pizzaService.PayForPizza(user).Amount);
+        //}
     }
 
 
