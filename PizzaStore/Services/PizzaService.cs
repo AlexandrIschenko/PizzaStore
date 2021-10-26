@@ -15,6 +15,7 @@ namespace PizzaStore.Services
             _pizzaValidator = pizzaValidator;
         }
 
+
         public Pizza ChoosePizza(string pizzaName)
         {
             if (!_pizzaValidator.IsPizzaTypeValid(pizzaName, out var pizzaType))
@@ -26,16 +27,19 @@ namespace PizzaStore.Services
                 PizzaType.Detroit => new Pizza { Price = 12, Name = nameof(PizzaType.Detroit) },
                 PizzaType.California => new Pizza { Price = 20, Name = nameof(PizzaType.California) }
             };
-
             return _pizza;
         }
 
-        public User PayForPizza(User user)
-        {
-            user.Amount -= _pizza.Price;
+        public User PayForPizza(User user, out bool check)
+        {             
+            check = user.Amount > _pizza.Price-1 ? true : false;
+            if (check)
+            {
+                user.Amount -= _pizza.Price;
 
-            Console.WriteLine($"You paid was successful. Pizza price {_pizza.Price}, you current amount {user.Amount}");
-
+                Console.WriteLine($"You paid was successful. Pizza price {_pizza.Price}, you current amount {user.Amount}");
+            }
+            if (!check) Console.WriteLine($"U cant buy pizza((.Pizza price {_pizza.Price}, you current amount {user.Amount}");
             return user;
         }
 
