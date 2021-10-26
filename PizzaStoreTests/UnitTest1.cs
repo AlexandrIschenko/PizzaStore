@@ -1,18 +1,39 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
+using PizzaStore.Models;
+using PizzaStore.Services;
+using PizzaStore.Validators;
 
 namespace PizzaStoreTests
 {
     public class Tests
-    {
-        [SetUp]
-        public void Setup()
+    {      
+        [TestCase("Vasya", 456, "Vasya", 456)]       
+        [TestCase("Vasya", 0, "Vasya", 0)]
+        [TestCase("123", 9980, "123", 9980)]
+        public void PositiveCreateUserTest(string name, double balance, string expName, double expBalance)
         {
+            // Arrange
+            UserValidator uValidator = new UserValidator();
+            UserService UService = new UserService(uValidator);
+            User expResUser = new User(expName, expBalance);
+            // Act
+            User actResUser = UService.CreateUser(name, balance);
+            // Assert
+            Assert.AreEqual(expResUser.Name, actResUser.Name);
+            Assert.AreEqual(expResUser.Amount, actResUser.Amount);
         }
 
-        [Test]
-        public void Test1()
+        [TestCase("Olga", -90)]
+        [TestCase("", 7657)]
+        public void NegativeCreateUserTest(string name, double balance)
         {
-            Assert.Pass();
+            // Arrange
+            UserValidator uValidator = new UserValidator();
+            UserService UService = new UserService(uValidator);
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(delegate { UService.CreateUser(name, balance); });
         }
     }
 }
