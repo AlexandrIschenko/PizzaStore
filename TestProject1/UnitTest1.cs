@@ -41,10 +41,10 @@ namespace TestUnit1
             }
         }
 
-        [TestCase("1", "California", 8)]
-        [TestCase("2", "Detroit", 10)]
-        [TestCase("3", "Neapolitan", 12)]
-        public void TestChooseTestPizza(string pizzaNumber, string nameExpectedPizza, double pricePizza)
+        [TestCase("1", "Detroit", 12)]
+        [TestCase("2", "California", 20)]
+        [TestCase("0", "Neapolitan", 10)]
+        public void ChooseTestPizza(string pizzaNumber, string nameExpectedPizza, double pricePizza)
         {
             PizzaService pizzaService = new PizzaService(new PizzaValidator());
             Assert.AreEqual(nameExpectedPizza, pizzaService.ChoosePizza(pizzaNumber).Name);
