@@ -21,7 +21,7 @@ namespace PizzaStore
             {
                 PizzaType.Detroit, new List<string>
                 {
-                    "White sugar", "Olive oil","Bread flour","Kosher salt","Red onion","Garlic","Mushrooms"
+                    "White potato", "Olive oil","Bread flour","Kosher salt","Red onion","Garlic","Mushrooms"
                 }
             }
         };

@@ -30,7 +30,7 @@ namespace PizzaStore.Services
             return _pizza;
         }
 
-        public User PayForPizza(User user) // Нужно проверить что у юзера пица-прайс поменялся. Будет две переменные цены, чтобы понять на сколько она поменялась.
+        public User PayForPizza(User user) // Нужно проверить что у юзера пица-прайс поменялся. Будет две переменные р
         {
             user.Amount -= _pizza.Price;
 

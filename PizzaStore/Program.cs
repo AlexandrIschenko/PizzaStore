@@ -6,7 +6,7 @@ namespace PizzaStore
 {
     internal static class Program
     {
-        private static void Main()
+         static void Main()
         {
             Console.WriteLine("Hello, please write your name:");
             var name = Console.ReadLine();
