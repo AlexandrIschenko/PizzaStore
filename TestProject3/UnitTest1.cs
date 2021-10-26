@@ -4,6 +4,7 @@ using PizzaStore.Services;
 using PizzaStore.Validators;
 using PizzaStore.Models;
 using System;
+using System.Collections.Generic;
 
 namespace TestProject3
 {
@@ -42,7 +43,7 @@ namespace TestProject3
             }
             catch (Exception expection)
             {
-               Assert.AreEqual(errorExpectedResult, expection.Message.ToString());
+                Assert.AreEqual(errorExpectedResult, expection.Message.ToString());
             }
         }
 
@@ -50,34 +51,45 @@ namespace TestProject3
         [TestCase("California", "California")]
         public void PizzaTypeTest(string namePizza, string pizzaTypeExpectedResult)
         {
-            var pizzaResult = new PizzaService( new PizzaValidator()).ChoosePizza(namePizza);
+            var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(namePizza);
             Assert.AreEqual(pizzaTypeExpectedResult, pizzaResult.Name);
         }
 
-        [TestCase("Neapolitan", " invalid")]
-        [TestCase("California", " invalid")]
-        [TestCase("Detroit", " invalid")]
-        public void PizzaErrorsTest(string namePizza, string pizzaTypeExpectedResult)
+        [TestCase("zzz", "zzz Does not exist. Please choose another.")]
+        [TestCase("***", "*** Does not exist. Please choose another.")]
+        [TestCase("  ", "   Does not exist. Please choose another.")]
+        public void PizzaErrorsTest(string pizzaNumber, string expectedExceptionText)
         {
-            try
-            {
-                var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(namePizza);
-            }
-            catch (Exception expection)
-            {
-                Assert.AreEqual(pizzaTypeExpectedResult, expection.Message.ToString());
-            }
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            Assert.Throws<ArgumentException>(delegate { pizzaService.ChoosePizza(pizzaNumber); }, expectedExceptionText);
         }
 
-        //[TestCase("1","Tina", 1, 8)]
-        //public void PizzaPayTest(string pizzaNumber, string userName, double userAmount, double expectedAmountResult)
-        //{
-        //    PizzaService pizzaService = new PizzaService(new PizzaValidator());
-        //    pizzaService.ChoosePizza(pizzaNumber);
-        //    User user = new UserService(new UserValidator()).CreateUser(userName, userAmount);
-        //    Assert.AreEqual(expectedAmountResult, pizzaService.PayForPizza(user).Amount);
-        //}
-    }
+        [TestCase("1", true)]
+        [TestCase("-1", false)]
+        public void UserValidatorAmountTest(double amountUser, bool expectedResult)
+        {
+            var validatorActual = new UserValidator();
+            bool actualResult = validatorActual.IsAmountValid(amountUser);
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
+        [TestCase("1", true)]
+        [TestCase("2", true)]
+        [TestCase("3", true)]
+        public void IsPizzaTypeValidTest(string pizzaNumber, bool expectedResult)
+        {
+            PizzaValidator pizzaValidator = new PizzaValidator();
+            bool actualResult = pizzaValidator.IsPizzaTypeValid(pizzaNumber, out PizzaType pizzaType);
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
+        [TestCase("1", true)]
+        [TestCase("2", true)]
+        public void CreatePizzaTest(string pizzaNumber, bool expectedResult)
+        {
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            var pizza = pizzaService.ChoosePizza(pizzaNumber);
+            Assert.AreEqual(expectedResult, pizzaService.CreatePizza(pizza).IsBaked);
+        }
+    } 
 }
