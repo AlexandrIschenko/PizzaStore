@@ -92,7 +92,6 @@ namespace PizzaStore.Tests
         }
 
 
-        //Что тут не так?
         [TestCase("2", "California", 20)]
         [TestCase("1", "Detroit", 12)]
         [TestCase("0", "Neapolitan", 10)]
