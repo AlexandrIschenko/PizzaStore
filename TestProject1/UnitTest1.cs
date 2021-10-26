@@ -24,10 +24,21 @@ namespace TestUnit1
             var userActual = new UserService(new UserValidator()).CreateUser(name, amountExpected);
             Assert.AreEqual(nameExpected, userActual.Name);
         }
-        [Test]
-        public void Test1()
+
+        [TestCase(" ", 0, "is invalid")]
+        [TestCase(" ", 1, "is invalid")]
+        [TestCase("Foma", 2, "invalid")]
+        [TestCase("Kosti4ka", 5, "Kosti4ka")]
+        public void NegativeUserCheck(string name, double amount, string invalidExpectedResult)
         {
-            Assert.Pass();
+            try
+            {
+                var userNew = new UserService(new UserValidator()).CreateUser(name, amount);
+            }
+            catch (Exception expection)
+            {
+                Assert.AreEqual(invalidExpectedResult, expection.Message.ToString());
+            }
         }
     }
 }
