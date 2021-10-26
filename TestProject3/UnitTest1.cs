@@ -53,7 +53,5 @@ namespace TestProject3
             var pizzaResult = new PizzaService( new PizzaValidator()).ChoosePizza(Namepizza);
             Assert.AreEqual(pizzaTypeExpectedResult, pizzaResult.Name);
         }
-
-
     }
 }
