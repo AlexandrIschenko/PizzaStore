@@ -29,12 +29,12 @@ namespace PizzaStore.Services
 
             return _pizza;
         }
-
+        
         public User PayForPizza(User user)
         {
-            user.Amount -= _pizza.Price;
+            user.Balance -= _pizza.Price;
 
-            Console.WriteLine($"You paid was successful. Pizza price {_pizza.Price}, you current amount {user.Amount}");
+            Console.WriteLine($"You paid was successful. Pizza price {_pizza.Price}, you current amount {user.Balance}");
 
             return user;
         }

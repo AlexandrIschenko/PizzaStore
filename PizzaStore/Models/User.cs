@@ -3,12 +3,12 @@
     public class User
     {
         public string Name { get; }
-        public double Amount { get; set; }
+        public double Balance { get; set; }
 
-        public User(string name, double amount)
+        public User(string name, double balance)
         {
             Name = name;
-            Amount = amount;
+            Balance = balance;
         }
     }
 }

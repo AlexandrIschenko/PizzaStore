@@ -6,7 +6,7 @@ using PizzaStore.Validators;
 
 namespace PizzaStoreTests
 {
-    public class Tests
+    public class UserServiceUnitTest
     {      
         [TestCase("Vasya", 456, "Vasya", 456)]       
         [TestCase("Vasya", 0, "Vasya", 0)]
@@ -21,7 +21,7 @@ namespace PizzaStoreTests
             User actResUser = UService.CreateUser(name, balance);
             // Assert
             Assert.AreEqual(expResUser.Name, actResUser.Name);
-            Assert.AreEqual(expResUser.Amount, actResUser.Amount);
+            Assert.AreEqual(expResUser.Balance, actResUser.Balance);
         }
 
         [TestCase("Olga", -90)]
