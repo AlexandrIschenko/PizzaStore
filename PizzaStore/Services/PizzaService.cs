@@ -25,7 +25,6 @@ namespace PizzaStore.Services
                 PizzaType.Neapolitan => new Pizza { Price = 10, Name = nameof(PizzaType.Neapolitan) },
                 PizzaType.Detroit => new Pizza { Price = 12, Name = nameof(PizzaType.Detroit) },
                 PizzaType.California => new Pizza { Price = 20, Name = nameof(PizzaType.California) },
-                _ => throw new NotImplementedException()
             };
 
             return _pizza;
