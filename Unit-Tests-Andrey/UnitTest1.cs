@@ -4,6 +4,7 @@ using PizzaStore.Services;
 using PizzaStore.Validators;
 using PizzaStore.Models;
 using System;
+using System.Collections.Generic;
 
 namespace Unit_Tests_Andrey
 {
@@ -83,13 +84,53 @@ namespace Unit_Tests_Andrey
             Assert.AreEqual(pizzaPrice, pizzaService.ChoosePizza(pizzaNumber).Price);
         }
 
+        [TestCase("abc", "cba does not exist. Please choose another.")]
+        [TestCase("!@#", "!@# does not exist. Please choose another.")]
+        [TestCase("  ", "   does not exist. Please choose another.")]
 
-        //{PizzaType.California} (8$) , (2){PizzaType.Detroit}(10$), (3){PizzaType.Neapolitan}(12$)
+        public void ChoosePizzaExceptionTest(string pizzaNumber, string expectedExceptionText)
+        {
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            Assert.Throws<ArgumentException>(delegate { pizzaService.ChoosePizza(pizzaNumber); }, expectedExceptionText);
+        }
 
-        //PizzaService.ChoosePizza(string pizzaName)
-        //PizzaService.PayForPizza(User user)
-        //PizzaService.CreatePizza
-        //PizzaService.BakePizza
-        //PizzaIngredientsService.GetIngredientsByPizzaType(PizzaType pizzaType)
+        [TestCase("1", "Andrey", 1, -8)] // take pizza number 1, amount 1 -  pizza price 8x1 = -8
+        [TestCase("2", "Ket", 2, -20)] // take pizza number 2, amount 2 -  pizza price 10x2 = -20
+
+        public void PayForPizzaTest(string pizzaNumber, string userName, double pizzaAmount, double expectedAmountLeft)
+        {
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            pizzaService.ChoosePizza(pizzaNumber);
+            User user = new UserService(new UserValidator()).CreateUser(userName, pizzaAmount);
+            Assert.AreEqual(expectedAmountLeft, pizzaService.PayForPizza(user).Amount);
+        }
+
+        [TestCase("1", true)]
+        [TestCase("2", true)]
+        //[TestCase("2", false)]
+
+        public void CreatePizzaTest(string pizzaNumber, bool expectedResult)
+        {
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            var pizza = pizzaService.ChoosePizza(pizzaNumber);
+            Assert.AreEqual(expectedResult, pizzaService.CreatePizza(pizza).IsBaked);
+        }
+
+        [TestCase("2", "White sugar", "Olive oil", "Bread flour", "Kosher salt", "Red onion", "Garlic", "Mushrooms")]
+        [TestCase("1", "Honey", "Olive oil", "Flour", "Salt", "Red onion", "Black olives", "Mushrooms")]
+        [TestCase("3", "Flour", "Mozzarella", "Tomato", "Tomato sauce", "Basil", "Yeast", "Olive oil")]
+
+        public void GetIngredientsByPizzaType(string pizzaNumber, params string[] ingridients)
+        {
+            List<string> ingridientsList = new List<string>();
+            foreach (var item in ingridients)
+            {
+                ingridientsList.Add(item);
+            }
+            
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            var pizza = pizzaService.ChoosePizza(pizzaNumber);
+            Assert.AreEqual(ingridientsList, PizzaIngredientsService.GetIngredientsByPizzaType(pizzaService.CreatePizza(pizza).Type));
+        }
     }
 }
