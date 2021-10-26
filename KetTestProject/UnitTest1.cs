@@ -1,4 +1,8 @@
 using NUnit.Framework;
+using System;
+using PizzaStore.Services;
+using PizzaStore.Validators;
+using PizzaStore.Models;
 
 namespace KetTestProject
 {
@@ -9,10 +13,13 @@ namespace KetTestProject
         {
         }
 
-        [Test]
-        public void Test1()
+        [TestCase("Neapolitan", "Neapolitan")]
+        [TestCase("Detroit", "Detroit")]
+        [TestCase("California", "California")]
+        public void PizzaType(string Namepizza, string pizzaTypeExpextedResult)
         {
-            Assert.Pass();
+            var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(Namepizza);
+            Assert.AreEqual(pizzaTypeExpextedResult, pizzaTypeExpextedResult.Name);
         }
     }
 }
