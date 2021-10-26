@@ -53,5 +53,22 @@ namespace TestProject3
             var pizzaResult = new PizzaService( new PizzaValidator()).ChoosePizza(Namepizza);
             Assert.AreEqual(pizzaTypeExpectedResult, pizzaResult.Name);
         }
+
+        [TestCase("Neapolitan", " invalid")]
+        [TestCase("California", " invalid")]
+        [TestCase("Detroit", " invalid")]
+        public void PizzaErrorsTest(string Namepizza, string pizzaTypeExpectedResult)
+        {
+            try
+            {
+                var pizzaResult = new PizzaService(new PizzaValidator()).ChoosePizza(Namepizza);
+            }
+            catch (Exception expection)
+            {
+                Assert.AreEqual(pizzaTypeExpectedResult, expection.Message.ToString());
+            }
+        }
     }
+
+
 }
