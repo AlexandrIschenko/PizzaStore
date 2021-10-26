@@ -20,6 +20,7 @@ namespace PizzaStore.Services
             if (!_pizzaValidator.IsPizzaTypeValid(pizzaName, out var pizzaType))
                 throw new ArgumentException($"{pizzaName} does not exist. Please choose another.");
 
+#pragma warning disable CS8524 // Выражение switch не обрабатывает некоторые типы входных значений, в том числе неименованное значение перечисления (не является исчерпывающим).
             _pizza = pizzaType switch
             {
                 PizzaType.Neapolitan => new Pizza { Price = 10, Name = nameof(PizzaType.Neapolitan) },
