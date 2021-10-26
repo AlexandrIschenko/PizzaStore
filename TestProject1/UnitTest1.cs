@@ -40,5 +40,16 @@ namespace TestUnit1
                 Assert.AreEqual(invalidExpectedResult, expection.Message.ToString());
             }
         }
+
+        [TestCase("1", "California", 8)]
+        [TestCase("2", "Detroit", 10)]
+        [TestCase("3", "Neapolitan", 12)]
+        public void TestChooseTestPizza(string pizzaNumber, string nameExpectedPizza, double pricePizza)
+        {
+            PizzaService pizzaService = new PizzaService(new PizzaValidator());
+            Assert.AreEqual(nameExpectedPizza, pizzaService.ChoosePizza(pizzaNumber).Name);
+            Assert.AreEqual(pricePizza, pizzaService.ChoosePizza(pizzaNumber).Price);
+
+        }
     }
 }

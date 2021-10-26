@@ -7,7 +7,7 @@ namespace PizzaStore
     internal static class Program
     {
          static void Main()
-        {
+         {
             Console.WriteLine("Hello, please write your name:");
             var name = Console.ReadLine();
 
@@ -19,6 +19,6 @@ namespace PizzaStore
             var menu = new Menu(pizzaService, user);
 
             menu.MakeOrder();
-        }
+         }
     }
 }
