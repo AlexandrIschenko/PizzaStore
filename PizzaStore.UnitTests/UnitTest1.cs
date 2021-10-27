@@ -1,19 +1,28 @@
 using NUnit.Framework;
 using PizzaStore;
+using PizzaStore.Validators;
 
 namespace PizzaStore.UnitTests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
+        [TestCase("K0lObok9 puPkin", true)]
+        public void IsNameValidPositiveTest(string testName, bool expectedResult)
         {
+            UserValidator uv = new UserValidator();
+            bool actualResult = uv.IsNameValid(testName);
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
-        [Test]
-        public void Test1()
+        [TestCase(" Kolya12", false)]
+        [TestCase("inokentii!", false)]
+        [TestCase("*", false)]
+        [TestCase("", false)]
+        public void IsNameValidNegativeTest(string testName, bool expectedResult)
         {
-            Assert.Pass();
+            UserValidator uv = new UserValidator();
+            bool actualResult = uv.IsNameValid(testName);
+            Assert.AreEqual(expectedResult, actualResult);
         }
     }
 }
